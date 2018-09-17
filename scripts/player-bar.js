@@ -4,8 +4,20 @@
      $(this).attr('playState', player.playState);
    });
 
-   $('button#next').on('click', function() {
-     if (player.playState !== 'playing') { return; }
+   $('button#previous').click(function() {
+     if (player.playState !== 'playing') { return false }
+
+     const currentSongIndex = album.songs.indexOf(player.currentlyPlaying);
+     const previousSongIndex = currentSongIndex - 1;
+     if (currentSongIndex < 1) { return; }
+
+     const newSong = album.songs[prevSongIndex];
+     player.playPause(newSong);
+     $('#time-control .total-time').text(player.prettyTime(newSong.duration) );
+   });
+
+   $('button#next').click(function() {
+     if (player.playState !== 'playing') { return false }
 
      const currentSongIndex = album.songs.indexOf(player.currentlyPlaying);
      const nextSongIndex = currentSongIndex + 1;
@@ -13,16 +25,8 @@
 
      const nextSong = album.songs[nextSongIndex];
      player.playPause(nextSong);
+     $('#time-control.total-time').text( player.prettyTime(newSong.duration)
    });
 
-   $('button#previous').on('click', function() {
-     if (player.playState !== 'playing') { return; }
 
-     const currentSongIndex = album.songs.indexOf(player.currentlyPlaying);
-     const previousSongIndex = currentSongIndex - 1;
-     if (previousSongIndex <= album.songs.length) { return; }
-
-     const previousSong = album.songs[previousSongIndex];
-     player.playPause(previousSong);
-   });
 }
